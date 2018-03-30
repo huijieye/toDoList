@@ -1,0 +1,22 @@
+{
+  "name": "toDoList",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.8",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.0",
+    "mongoose": "^5.0.12",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.2"
+  }
+}
