@@ -12,26 +12,18 @@ exports.add_task = (req,res,next) => {
                 message: "introuvable"
             })
         }
-        let state = ""
-
-        if(req.body.state === "en cours"){
-            state = true
-        }
-        else{
-            state = false
-        }
 
         const task = new Tasks({
             _id: mongoose.Types.ObjectId(),
             userId:req.body.userId,
-            task: req.body.task,
-            state: state
+            task: req.body.task
         })
         return task.save()
     }).then(end => {
-        res.status(201).json({
-            message: "tâche créée"
-        })
+        res.redirect("/task/all/"+req.session.userId)
+        // res.status(201).json({
+        //     message: "tâche créée"
+        // })
     }).catch(err => {
         res.status(500).json({})
     })
@@ -60,11 +52,12 @@ exports.detail_task = (req,res,next)=>{
 
     Tasks.findById({
         _id:id
-    }).select('_id task state').exec().then(task => {
-        res.status(200).json({
-            message: "tâche: "+id,
-            task
-        })
+    }).select('_id task state').exec().then(tache => {
+        res.render('task.ejs',{tache, userId:req.session.userId})
+        // res.status(200).json({
+        //     message: "tâche: "+id,
+        //     task
+        // })
     }).catch(err => {
         res.status(500).json({
             err
@@ -88,10 +81,13 @@ exports.update_task = (req,res,next)=>{
     }
 
     Tasks.update({_id:id},{$set: updateObj}).then(result => {
-        res.status(200).json({
-            message:"update reussite",
-            result
-        })
+        res.redirect("/task/"+id+"/?userId="+req.session.userId)
+        // res.redirect("/task/all/"+req.session.userId)
+
+        // res.status(200).json({
+        //     message:"update reussite",
+        //     data: updateObj
+        // })
     }).catch(err => {
         res.status(500).json({
             err
@@ -103,9 +99,10 @@ exports.delete_task = (req,res,next)=>{
     const id = req.params.id
 
     Tasks.findByIdAndRemove(id).then(result=>{
-        res.status(200).json({
-            message: "suppresion du post"
-        })
+        res.redirect("/task/all/"+req.session.userId)
+        // res.status(200).json({
+        //     message: "suppresion du post"
+        // })
     }).catch(err => {
         res.status(500).json({
             err

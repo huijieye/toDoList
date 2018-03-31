@@ -47,15 +47,17 @@ exports.user_login = (req, res, next) => {
                         error: 'verification erreur'
                     })
                 } else {
-                    console.log(user.id)
+                    req.session.userId = user._id
                     const token = jwt.sign({
                         id: user._id,
                         email: user.email,
                     }, process.env.JWT_SECRET_KEY, {expiresIn: "1h"})
-                    res.status(200).json({
-                        message: "authorisation",
-                        token
-                    })
+
+                    res.redirect('task/all/'+user._id)
+                    // res.status(200).json({
+                    //     message: "authorisation",
+                    //     token,
+                    // })
                 }
 
             })

@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 const User = require('../model/users')
 const { user_signup, user_login } = require('../controllers/users')
 
-
+router.get('/',(req,res) => {
+    res.render('login.ejs')
+})
 
 router.post('/inscription', user_signup)
 

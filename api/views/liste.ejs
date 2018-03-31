@@ -1,8 +1,18 @@
-<h1> Liste des tâches </h1>
+<% let state = "" %>
+<h1> Mes listes des tâches </h1>
+
+
 <ul>
 
     <% for (let i = 0; i < liste.length; i++) { %>
-    <li><%= liste[i].task%> + <%= liste[i].state%></li>
+    <% if(liste[i].state == true){ %>
+    <% state = "en cours" %>
+    <% } else {%>
+    <% state = "fini" %>
+    <% } %>
+    <li><a href=<%="/task/"+liste[i]._id%>><%= liste[i].task%> ---- <%=state%></a></li>
     <% }%>
 
 </ul>
+
+

@@ -1,0 +1,19 @@
+<p>Tâche: <%=tache.task%></p>
+<form action=<%="/task/update/"+tache._id%> method="post">
+    <% if(tache.state == true){ %>
+    <input type="text" name="state" id="state" value="fini" hidden>
+    <input type="submit" value="Fini"/>
+    <% } else {%>
+    <input type="text" name="state" id="state" value="en cours" hidden>
+    <input type="submit" value="Réactive"/>
+    <% } %>
+</form>
+
+<form action=<%="/task/delete/"+tache._id%> method="post">
+    <input type="text" name="id" id="id" value=<%=tache._id%> hidden>
+    <input type="submit" value="Supprimer">
+</form>
+
+<a href=<%="/task/all/"+userId %>>Retour</a>
+
+
