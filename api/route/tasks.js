@@ -6,19 +6,15 @@ const { all_tasks, detail_task, update_task, delete_task, add_task } = require('
 
 
 
-router.get('/all/:userId', all_tasks)
+router.get('/all/:userId', auth, all_tasks)
 
 router.get('/:id', detail_task)
 
-router.get('/addTask', (req,res) => {
-    res.render('add.ejs')
-})
+router.post('/add', auth, add_task)
 
-// router.post('/add', add_task)
-//
-// router.post('/update/:id', update_task)
-//
-// router.post('/delete/:id', delete_task)
+router.post('/update/:id',auth, update_task)
+
+router.post('/delete/:id', auth, delete_task)
 
 
 module.exports = router

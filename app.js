@@ -3,6 +3,7 @@ const morgan = require('morgan')
 const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const session = require('cookie-session')
 
 mongoose.connect("mongodb://root:"+process.env.MONGODB_PASSWORD+"@cluster-shard-00-00-prx3s.mongodb.net:27017,cluster-shard-00-01-prx3s.mongodb.net:27017,cluster-shard-00-02-prx3s.mongodb.net:27017/test?ssl=true&replicaSet=Cluster-shard-0&authSource=admin")
 
@@ -12,7 +13,11 @@ const taskRoute = require('./api/route/tasks')
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
-
+app.use(session({
+    name:'session',
+    keys: ['azerty'],
+    maxAge: 12*60*60*1000
+}))
 
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Origin', '*')
@@ -23,7 +28,7 @@ app.use((req,res,next)=>{
 
 app.set('views','./api/views')
 
-app.use('/',userRoute)
+app.use('/', userRoute)
 app.use('/task', taskRoute)
 
 module.exports = app

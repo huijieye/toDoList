@@ -3,6 +3,7 @@ const User = require('../model/users')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+
 exports.user_signup = (req,res,next)=>{
 
     User.findOne({email: req.body.email}).then(user => {
@@ -21,10 +22,11 @@ exports.user_signup = (req,res,next)=>{
                 })
                 console.log(user)
                 user.save().then(result => {
-                    res.status(201).json({
-                        message:"user created",
-                        result
-                    })
+                    res.redirect('task/all/'+user._id)
+                    // res.status(201).json({
+                    //     message:"user created",
+                    //     result
+                    // })
                 }).catch(err => {
                     res.status(500).json({})
                 })
@@ -52,6 +54,7 @@ exports.user_login = (req, res, next) => {
                         id: user._id,
                         email: user.email,
                     }, process.env.JWT_SECRET_KEY, {expiresIn: "1h"})
+                    req.session.token = token
 
                     res.redirect('task/all/'+user._id)
                     // res.status(200).json({

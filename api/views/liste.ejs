@@ -1,6 +1,14 @@
 <% let state = "" %>
-<h1> Mes listes des tâches </h1>
+<p>Ajouter une tâche</p>
 
+<form action="/task/add", method="post">
+    <label>Nom de la tâche</label>
+    <input type="text" name="task" id="task" autofocus>
+    <input type="text" name="userId" id="userId" value=<%=userId%> hidden>
+    <input type="submit" value="Ajouter">
+</form>
+
+<h1> Mes listes des tâches </h1>
 
 <ul>
 

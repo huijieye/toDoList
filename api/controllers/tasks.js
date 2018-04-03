@@ -35,7 +35,7 @@ exports.all_tasks = (req,res,next)=>{
     Tasks.find({
         userId:id
     }).select('_id task state').exec().then(tasks => {
-        res.render('liste.ejs',{liste:tasks})
+        res.render('liste.ejs',{liste:tasks, userId:id})
         // res.status(200).json({
         //     message: "tous les tâches:",
         //     tasks

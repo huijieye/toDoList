@@ -7,6 +7,10 @@ router.get('/',(req,res) => {
     res.render('login.ejs')
 })
 
+router.get('/signIn', (req,res)=>{
+    res.render('signIn.ejs')
+})
+
 router.post('/inscription', user_signup)
 
 router.post('/login', user_login)
